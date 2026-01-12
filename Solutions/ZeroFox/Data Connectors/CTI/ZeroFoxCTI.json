@@ -308,7 +308,7 @@
         },
         {
             "title": "Preparing resources for deployment.",
-            "description": "1. Click the **Deploy to Azure** button below. \n\n\t[![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://aka.ms/sentinel-zerofox-azuredeploy)\n2. Select the preferred **Subscription**, **Resource Group**, Log analytics Workspace and **Location**. \n3. Enter the **Workspace ID**, **Workspace Key**, **ZeroFox Username**, **ZeroFox Personal Access Token**\n4.\n5. Click **Review + Create** to deploy."
+            "description": "1. Click the **Deploy to Azure** button below. \n\n\t[![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://aka.ms/sentinel-zerofox-azuredeploy)\n2. Select the preferred **Subscription**, **Resource Group**, Log analytics Workspace and **Location**. \n3. Enter the **Workspace ID**, **Workspace Key**, **ZeroFox Username**, **ZeroFox Personal Access Token**\n4. Click **Review + Create** to deploy."
         }
     ]
 }

@@ -130,8 +130,9 @@ class SentinelConnector:
                 )
                 self.successfull_sent_events_number += events_number
             else:
+                response_text = await response.text()
                 logging.error(
-                    f"Error during sending events to Microsoft Sentinel. Response code: {response.status_code}, with message: {response.text}"
+                    f"Error during sending events to Microsoft Sentinel. Response code: {response.status}, with message: {response_text}"
                 )
                 self.failed_sent_events_number += events_number
 
