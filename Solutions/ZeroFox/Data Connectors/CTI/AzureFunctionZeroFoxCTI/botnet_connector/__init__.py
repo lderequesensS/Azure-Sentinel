@@ -2,7 +2,6 @@ import logging
 import os
 from datetime import datetime, timezone, timedelta
 
-import aiohttp
 import azure.functions as func
 from connections.sentinel import SentinelConnector
 from connections.zerofox import ZeroFoxClient
@@ -16,8 +15,11 @@ async def main(mytimer: func.TimerRequest) -> None:
     if mytimer.past_due:
         logging.info("The timer is past due!")
 
-    customer_id = os.environ.get("WorkspaceID")
-    shared_key = os.environ.get("WorkspaceKey")
+    # Environment variables for Logs Ingestion API
+    dce_endpoint = os.environ.get("DCE_ENDPOINT")
+    dcr_immutable_id = os.environ.get("DCR_IMMUTABLE_ID")
+    # Each connector has its own stream/table
+    stream_name = "Custom-ZeroFox_CTI_botnet_CL"
 
     query_from = (
         max(parse_last_update(mytimer), (now - timedelta(days=1)))
@@ -30,22 +32,21 @@ async def main(mytimer: func.TimerRequest) -> None:
 
     log_type = "ZeroFox_CTI_botnet"
 
-    async with aiohttp.ClientSession() as session:
-        sentinel = SentinelConnector(
-            session=session,
-            customer_id=customer_id,
-            shared_key=shared_key,
-            log_type=log_type,
-        )
-        async with sentinel:
-            batches = get_cti_botnet(zerofox, listed_after=query_from)
-            for batch in batches:
-                await sentinel.send(batch)
+    sentinel = SentinelConnector(
+        dce_endpoint=dce_endpoint,
+        dcr_immutable_id=dcr_immutable_id,
+        stream_name=stream_name,
+    )
+    async with sentinel:
+        batches = get_cti_botnet(zerofox, listed_after=query_from)
+        for batch in batches:
+            await sentinel.send(batch)
+
     if sentinel.failed_sent_events_number:
         logging.error(f"Failed to send {sentinel.failed_sent_events_number} events")
     logging.info(
-        f"Connector {log_type} ran at {utc_timestamp}, \
-                  sending {sentinel.successfull_sent_events_number} events to Sentinel."
+        f"Connector {log_type} ran at {utc_timestamp}, "
+        f"sending {sentinel.successfull_sent_events_number} events to Sentinel."
     )
 
 
