@@ -4,7 +4,7 @@
     "parameters": {
         "FunctionName": {
             "defaultValue": "ZeroFoxCTI",
-            "minLength": 1,           
+            "minLength": 1,
             "type": "string"
         },
         "ZeroFoxToken": {
@@ -24,25 +24,259 @@
         "WorkspaceResourceId": {
             "type": "string",
             "metadata": {
-                "description": "The full ARM Resource ID of the Log Analytics workspace. Find this in Azure Portal: Log Analytics workspace > Settings > Properties > Resource ID. NOTE: This is NOT the Workspace ID (GUID)."
+                "description": "The full ARM Resource ID of the Log Analytics workspace. Find this in Azure Portal: Log Analytics workspace > Settings > Properties > Resource ID. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. NOTE: This is NOT the Workspace ID (GUID)."
             }
         }
     },
     "variables": {
         "FunctionName": "[concat(toLower(parameters('FunctionName')), uniqueString(resourceGroup().id))]",
         "StorageAccountName": "[substring(tolower(variables('FunctionName')), 0, 22)]",
-         "StorageSuffix": "[environment().suffixes.storage]",
+        "StorageSuffix": "[environment().suffixes.storage]",
         "DCEName": "[concat('dce-', variables('FunctionName'))]",
         "DCRName1": "[concat('dcr1-', variables('FunctionName'))]",
         "DCRName2": "[concat('dcr2-', variables('FunctionName'))]",
         "DCRName3": "[concat('dcr3-', variables('FunctionName'))]",
         "MonitoringMetricsPublisherRoleId": "3913510d-42f4-4e42-8a64-420c390055eb",
-        "genericStreamColumns": [
-            {"name": "TimeGenerated", "type": "datetime"},
-            {"name": "RawData", "type": "dynamic"}
-        ]
+        "WorkspaceName": "[last(split(parameters('WorkspaceResourceId'), '/'))]",
+        "TableSchema": {
+            "columns": [
+                {"name": "TimeGenerated", "type": "datetime", "description": "The time the event was generated"},
+                {"name": "RawData", "type": "dynamic", "description": "The raw CTI data from ZeroFox"}
+            ]
+        }
     },
     "resources": [
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_advanced_dark_web_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_advanced_dark_web_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_botnet_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_botnet_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_botnet_compromised_credentials_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_botnet_compromised_credentials_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_breaches_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_breaches_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_C2_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_C2_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_compromised_credentials_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_compromised_credentials_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_credit_cards_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_credit_cards_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_dark_web_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_dark_web_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_discord_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_discord_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_disruption_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_disruption_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_email_addresses_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_email_addresses_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_exploits_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_exploits_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_irc_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_irc_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_malware_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_malware_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_national_ids_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_national_ids_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_phishing_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_phishing_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_phone_numbers_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_phone_numbers_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_ransomware_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_ransomware_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_telegram_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_telegram_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_threat_actors_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_threat_actors_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/tables",
+            "apiVersion": "2022-10-01",
+            "name": "[concat(variables('WorkspaceName'), '/ZeroFox_CTI_vulnerabilities_CL')]",
+            "properties": {
+                "schema": {
+                    "name": "ZeroFox_CTI_vulnerabilities_CL",
+                    "columns": "[variables('TableSchema').columns]"
+                }
+            }
+        },
         {
             "type": "Microsoft.Insights/components",
             "apiVersion": "2020-02-02",
@@ -92,7 +326,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices",
             "apiVersion": "2019-06-01",
-             "name": "[concat(variables('StorageAccountName'), '/default')]",
+            "name": "[concat(variables('StorageAccountName'), '/default')]",
             "dependsOn": ["[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"],
             "sku": {"name": "Standard_LRS", "tier": "Standard"},
             "properties": {"cors": {"corsRules": []}}
@@ -111,29 +345,52 @@
             "apiVersion": "2022-06-01",
             "name": "[variables('DCRName1')]",
             "location": "[resourceGroup().location]",
-            "dependsOn": ["[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]"],
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_advanced_dark_web_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_botnet_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_botnet_compromised_credentials_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_breaches_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_C2_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_compromised_credentials_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_credit_cards_CL')]"
+            ],
             "properties": {
                 "dataCollectionEndpointId": "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
                 "streamDeclarations": {
-                    "Custom-ZeroFox_CTI_advanced_dark_web_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_botnet_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_botnet_compromised_credentials_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_breaches_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_C2_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_compromised_credentials_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_credit_cards_CL": {"columns": "[variables('genericStreamColumns')]"}
+                    "Custom-ZeroFox_CTI_advanced_dark_web_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_botnet_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_botnet_compromised_credentials_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_breaches_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_C2_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_compromised_credentials_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_credit_cards_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    }
                 },
                 "destinations": {
                     "logAnalytics": [{"workspaceResourceId": "[parameters('WorkspaceResourceId')]", "name": "sentinel-workspace"}]
                 },
                 "dataFlows": [
-                    {"streams": ["Custom-ZeroFox_CTI_advanced_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_advanced_dark_web_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_botnet_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_botnet_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_breaches_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_breaches_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_C2_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_C2_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_compromised_credentials_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_credit_cards_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_credit_cards_CL"}
+                    {"streams": ["Custom-ZeroFox_CTI_advanced_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_advanced_dark_web_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_botnet_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_botnet_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_breaches_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_breaches_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_C2_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_C2_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_compromised_credentials_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_credit_cards_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_credit_cards_CL"}
                 ]
             }
         },
@@ -142,29 +399,52 @@
             "apiVersion": "2022-06-01",
             "name": "[variables('DCRName2')]",
             "location": "[resourceGroup().location]",
-            "dependsOn": ["[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]"],
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_dark_web_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_discord_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_disruption_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_email_addresses_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_exploits_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_irc_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_malware_CL')]"
+            ],
             "properties": {
                 "dataCollectionEndpointId": "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
                 "streamDeclarations": {
-                    "Custom-ZeroFox_CTI_dark_web_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_discord_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_disruption_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_email_addresses_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_exploits_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_irc_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_malware_CL": {"columns": "[variables('genericStreamColumns')]"}
+                    "Custom-ZeroFox_CTI_dark_web_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_discord_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_disruption_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_email_addresses_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_exploits_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_irc_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_malware_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    }
                 },
                 "destinations": {
                     "logAnalytics": [{"workspaceResourceId": "[parameters('WorkspaceResourceId')]", "name": "sentinel-workspace"}]
                 },
                 "dataFlows": [
-                    {"streams": ["Custom-ZeroFox_CTI_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_dark_web_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_discord_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_discord_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_disruption_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_disruption_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_email_addresses_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_email_addresses_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_exploits_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_exploits_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_irc_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_irc_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_malware_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_malware_CL"}
+                    {"streams": ["Custom-ZeroFox_CTI_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_dark_web_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_discord_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_discord_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_disruption_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_disruption_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_email_addresses_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_email_addresses_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_exploits_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_exploits_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_irc_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_irc_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_malware_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_malware_CL"}
                 ]
             }
         },
@@ -173,29 +453,52 @@
             "apiVersion": "2022-06-01",
             "name": "[variables('DCRName3')]",
             "location": "[resourceGroup().location]",
-            "dependsOn": ["[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]"],
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_national_ids_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_phishing_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_phone_numbers_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_ransomware_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_telegram_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_threat_actors_CL')]",
+                "[concat(parameters('WorkspaceResourceId'), '/tables/ZeroFox_CTI_vulnerabilities_CL')]"
+            ],
             "properties": {
                 "dataCollectionEndpointId": "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
                 "streamDeclarations": {
-                    "Custom-ZeroFox_CTI_national_ids_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_phishing_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_phone_numbers_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_ransomware_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_telegram_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_threat_actors_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_vulnerabilities_CL": {"columns": "[variables('genericStreamColumns')]"}
+                    "Custom-ZeroFox_CTI_national_ids_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_phishing_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_phone_numbers_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_ransomware_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_telegram_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_threat_actors_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    },
+                    "Custom-ZeroFox_CTI_vulnerabilities_CL": {
+                        "columns": [{"name": "TimeGenerated", "type": "datetime"}, {"name": "RawData", "type": "dynamic"}]
+                    }
                 },
                 "destinations": {
                     "logAnalytics": [{"workspaceResourceId": "[parameters('WorkspaceResourceId')]", "name": "sentinel-workspace"}]
                 },
                 "dataFlows": [
-                    {"streams": ["Custom-ZeroFox_CTI_national_ids_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_national_ids_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_phishing_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_phishing_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_phone_numbers_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_phone_numbers_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_ransomware_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_ransomware_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_telegram_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_telegram_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_threat_actors_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_threat_actors_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_vulnerabilities_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_vulnerabilities_CL"}
+                    {"streams": ["Custom-ZeroFox_CTI_national_ids_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_national_ids_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_phishing_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_phishing_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_phone_numbers_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_phone_numbers_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_ransomware_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_ransomware_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_telegram_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_telegram_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_threat_actors_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_threat_actors_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_vulnerabilities_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source", "outputStream": "Custom-ZeroFox_CTI_vulnerabilities_CL"}
                 ]
             }
         },
@@ -313,7 +616,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
             "apiVersion": "2019-06-01",
-             "name": "[concat(variables('StorageAccountName'), '/default/', variables('StorageAccountName'))]",
+            "name": "[concat(variables('StorageAccountName'), '/default/', variables('StorageAccountName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts/fileServices', variables('StorageAccountName'), 'default')]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"

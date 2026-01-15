@@ -40,7 +40,8 @@ async def main(mytimer: func.TimerRequest) -> None:
     async with sentinel:
         batches = get_cti_telegram(zerofox, timestamp_after=query_from)
         for batch in batches:
-            await sentinel.send(batch)
+            wrapped_batch = [{"TimeGenerated": now.isoformat(), "RawData": record} for record in batch]
+            await sentinel.send(wrapped_batch)
 
     if sentinel.failed_sent_events_number:
         logging.error(f"Failed to send {sentinel.failed_sent_events_number} events")

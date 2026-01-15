@@ -40,7 +40,7 @@ class SentinelConnector:
             dcr_immutable_id: Data Collection Rule Immutable ID
                 (e.g., dcr-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
             stream_name: Stream name defined in the DCR
-                (e.g., Custom-ZeroFox_CTI_CL)
+                (e.g., Custom-ZeroFox_CTI_botnet_CL)
             queue_size: Number of events to buffer before flushing
             queue_size_bytes: Maximum size in bytes before splitting requests
         """

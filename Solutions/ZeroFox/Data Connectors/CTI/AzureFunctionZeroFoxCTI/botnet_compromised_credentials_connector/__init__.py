@@ -42,7 +42,12 @@ async def main(mytimer: func.TimerRequest) -> None:
                 zerofox, created_after=query_from
             )
         for batch in batches:
-            await sentinel.send(batch)
+            # Wrap each record with TimeGenerated and RawData
+            wrapped_batch = [
+                {"TimeGenerated": now.isoformat(), "RawData": record}
+                for record in batch
+            ]
+            await sentinel.send(wrapped_batch)
 
     if sentinel.failed_sent_events_number:
         logging.error(f"Failed to send {sentinel.failed_sent_events_number} events")

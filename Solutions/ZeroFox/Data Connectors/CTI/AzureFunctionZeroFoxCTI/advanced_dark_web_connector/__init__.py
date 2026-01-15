@@ -18,7 +18,6 @@ async def main(mytimer: func.TimerRequest) -> None:
     # Environment variables for Logs Ingestion API
     dce_endpoint = os.environ.get("DCE_ENDPOINT")
     dcr_immutable_id = os.environ.get("DCR_IMMUTABLE_ID_1")
-    # Each connector has its own stream/table
     stream_name = "Custom-ZeroFox_CTI_advanced_dark_web_CL"
 
     query_from = (
@@ -29,7 +28,6 @@ async def main(mytimer: func.TimerRequest) -> None:
     logging.info(f"Querying ZeroFox since {query_from}")
 
     zerofox = get_zf_client()
-
     log_type = "ZeroFox_CTI_advanced_dark_web"
 
     sentinel = SentinelConnector(
@@ -40,7 +38,12 @@ async def main(mytimer: func.TimerRequest) -> None:
     async with sentinel:
         batches = get_cti_advanced_dark_web(zerofox, created_after=query_from)
         for batch in batches:
-            await sentinel.send(batch)
+            # Wrap each record with TimeGenerated and RawData
+            wrapped_batch = [
+                {"TimeGenerated": now.isoformat(), "RawData": record}
+                for record in batch
+            ]
+            await sentinel.send(wrapped_batch)
 
     if sentinel.failed_sent_events_number:
         logging.error(f"Failed to send {sentinel.failed_sent_events_number} events")
