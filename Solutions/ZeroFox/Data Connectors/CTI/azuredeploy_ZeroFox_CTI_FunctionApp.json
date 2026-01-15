@@ -33,7 +33,9 @@
         "StorageAccountName": "[substring(tolower(variables('FunctionName')), 0, 22)]",
          "StorageSuffix": "[environment().suffixes.storage]",
         "DCEName": "[concat('dce-', variables('FunctionName'))]",
-        "DCRName": "[concat('dcr-', variables('FunctionName'))]",
+        "DCRName1": "[concat('dcr1-', variables('FunctionName'))]",
+        "DCRName2": "[concat('dcr2-', variables('FunctionName'))]",
+        "DCRName3": "[concat('dcr3-', variables('FunctionName'))]",
         "MonitoringMetricsPublisherRoleId": "3913510d-42f4-4e42-8a64-420c390055eb",
         "genericStreamColumns": [
             {"name": "TimeGenerated", "type": "datetime"},
@@ -55,13 +57,10 @@
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2021-09-01",
             "name": "[variables('StorageAccountName')]",
             "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
-            },
+            "sku": {"name": "Standard_LRS", "tier": "Standard"},
             "kind": "StorageV2",
             "properties": {
                 "networkAcls": {
@@ -71,6 +70,8 @@
                     "defaultAction": "Allow"
                 },
                 "supportsHttpsTrafficOnly": true,
+                "minimumTlsVersion": "TLS1_2",
+                "allowBlobPublicAccess": false,
                 "encryption": {
                     "services": {
                         "file": {"keyType": "Account", "enabled": true},
@@ -108,7 +109,7 @@
         {
             "type": "Microsoft.Insights/dataCollectionRules",
             "apiVersion": "2022-06-01",
-            "name": "[variables('DCRName')]",
+            "name": "[variables('DCRName1')]",
             "location": "[resourceGroup().location]",
             "dependsOn": ["[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]"],
             "properties": {
@@ -120,14 +121,62 @@
                     "Custom-ZeroFox_CTI_breaches_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_C2_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_compromised_credentials_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_credit_cards_CL": {"columns": "[variables('genericStreamColumns')]"},
+                    "Custom-ZeroFox_CTI_credit_cards_CL": {"columns": "[variables('genericStreamColumns')]"}
+                },
+                "destinations": {
+                    "logAnalytics": [{"workspaceResourceId": "[parameters('WorkspaceResourceId')]", "name": "sentinel-workspace"}]
+                },
+                "dataFlows": [
+                    {"streams": ["Custom-ZeroFox_CTI_advanced_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_advanced_dark_web_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_botnet_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_botnet_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_breaches_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_breaches_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_C2_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_C2_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_compromised_credentials_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_credit_cards_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_credit_cards_CL"}
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2022-06-01",
+            "name": "[variables('DCRName2')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": ["[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]"],
+            "properties": {
+                "dataCollectionEndpointId": "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
+                "streamDeclarations": {
                     "Custom-ZeroFox_CTI_dark_web_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_discord_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_disruption_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_email_addresses_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_exploits_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_irc_CL": {"columns": "[variables('genericStreamColumns')]"},
-                    "Custom-ZeroFox_CTI_malware_CL": {"columns": "[variables('genericStreamColumns')]"},
+                    "Custom-ZeroFox_CTI_malware_CL": {"columns": "[variables('genericStreamColumns')]"}
+                },
+                "destinations": {
+                    "logAnalytics": [{"workspaceResourceId": "[parameters('WorkspaceResourceId')]", "name": "sentinel-workspace"}]
+                },
+                "dataFlows": [
+                    {"streams": ["Custom-ZeroFox_CTI_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_dark_web_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_discord_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_discord_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_disruption_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_disruption_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_email_addresses_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_email_addresses_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_exploits_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_exploits_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_irc_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_irc_CL"},
+                    {"streams": ["Custom-ZeroFox_CTI_malware_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_malware_CL"}
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2022-06-01",
+            "name": "[variables('DCRName3')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": ["[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]"],
+            "properties": {
+                "dataCollectionEndpointId": "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
+                "streamDeclarations": {
                     "Custom-ZeroFox_CTI_national_ids_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_phishing_CL": {"columns": "[variables('genericStreamColumns')]"},
                     "Custom-ZeroFox_CTI_phone_numbers_CL": {"columns": "[variables('genericStreamColumns')]"},
@@ -137,28 +186,9 @@
                     "Custom-ZeroFox_CTI_vulnerabilities_CL": {"columns": "[variables('genericStreamColumns')]"}
                 },
                 "destinations": {
-                    "logAnalytics": [
-                        {
-                            "workspaceResourceId": "[parameters('WorkspaceResourceId')]",
-                            "name": "sentinel-workspace"
-                        }
-                    ]
+                    "logAnalytics": [{"workspaceResourceId": "[parameters('WorkspaceResourceId')]", "name": "sentinel-workspace"}]
                 },
                 "dataFlows": [
-                    {"streams": ["Custom-ZeroFox_CTI_advanced_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_advanced_dark_web_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_botnet_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_botnet_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_botnet_compromised_credentials_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_breaches_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_breaches_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_C2_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_C2_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_compromised_credentials_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_compromised_credentials_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_credit_cards_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_credit_cards_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_dark_web_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_dark_web_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_discord_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_discord_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_disruption_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_disruption_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_email_addresses_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_email_addresses_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_exploits_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_exploits_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_irc_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_irc_CL"},
-                    {"streams": ["Custom-ZeroFox_CTI_malware_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_malware_CL"},
                     {"streams": ["Custom-ZeroFox_CTI_national_ids_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_national_ids_CL"},
                     {"streams": ["Custom-ZeroFox_CTI_phishing_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_phishing_CL"},
                     {"streams": ["Custom-ZeroFox_CTI_phone_numbers_CL"], "destinations": ["sentinel-workspace"], "transformKql": "source | extend TimeGenerated = now()", "outputStream": "Custom-ZeroFox_CTI_phone_numbers_CL"},
@@ -178,7 +208,9 @@
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]",
                 "[resourceId('Microsoft.Insights/components', variables('FunctionName'))]",
                 "[resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName'))]",
-                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName'))]"
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName1'))]",
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName2'))]",
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName3'))]"
             ],
             "kind": "functionapp,linux",
             "identity": {"type": "SystemAssigned"},
@@ -205,7 +237,9 @@
                         "ZeroFoxUsername": "[parameters('ZeroFoxUsername')]",
                         "ZeroFoxToken": "[parameters('ZeroFoxToken')]",
                         "DCE_ENDPOINT": "[reference(resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName')), '2022-06-01').logsIngestion.endpoint]",
-                        "DCR_IMMUTABLE_ID": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName')), '2022-06-01').immutableId]",
+                        "DCR_IMMUTABLE_ID_1": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName1')), '2022-06-01').immutableId]",
+                        "DCR_IMMUTABLE_ID_2": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName2')), '2022-06-01').immutableId]",
+                        "DCR_IMMUTABLE_ID_3": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName3')), '2022-06-01').immutableId]",
                         "WEBSITE_RUN_FROM_PACKAGE": "https://aka.ms/sentinel-ZeroFoxCTI-functionapp"
                     }
                 }
@@ -214,12 +248,42 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[guid(resourceGroup().id, variables('FunctionName'), variables('MonitoringMetricsPublisherRoleId'))]",
+            "name": "[guid(resourceGroup().id, variables('FunctionName'), variables('DCRName1'), variables('MonitoringMetricsPublisherRoleId'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', variables('FunctionName'))]",
-                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName'))]"
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName1'))]"
             ],
-            "scope": "[concat('Microsoft.Insights/dataCollectionRules/', variables('DCRName'))]",
+            "scope": "[concat('Microsoft.Insights/dataCollectionRules/', variables('DCRName1'))]",
+            "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('MonitoringMetricsPublisherRoleId'))]",
+                "principalId": "[reference(resourceId('Microsoft.Web/sites', variables('FunctionName')), '2018-11-01', 'Full').identity.principalId]",
+                "principalType": "ServicePrincipal"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2022-04-01",
+            "name": "[guid(resourceGroup().id, variables('FunctionName'), variables('DCRName2'), variables('MonitoringMetricsPublisherRoleId'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', variables('FunctionName'))]",
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName2'))]"
+            ],
+            "scope": "[concat('Microsoft.Insights/dataCollectionRules/', variables('DCRName2'))]",
+            "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('MonitoringMetricsPublisherRoleId'))]",
+                "principalId": "[reference(resourceId('Microsoft.Web/sites', variables('FunctionName')), '2018-11-01', 'Full').identity.principalId]",
+                "principalType": "ServicePrincipal"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2022-04-01",
+            "name": "[guid(resourceGroup().id, variables('FunctionName'), variables('DCRName3'), variables('MonitoringMetricsPublisherRoleId'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', variables('FunctionName'))]",
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName3'))]"
+            ],
+            "scope": "[concat('Microsoft.Insights/dataCollectionRules/', variables('DCRName3'))]",
             "properties": {
                 "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('MonitoringMetricsPublisherRoleId'))]",
                 "principalId": "[reference(resourceId('Microsoft.Web/sites', variables('FunctionName')), '2018-11-01', 'Full').identity.principalId]",
@@ -262,9 +326,17 @@
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Insights/dataCollectionEndpoints', variables('DCEName')), '2022-06-01').logsIngestion.endpoint]"
         },
-        "DataCollectionRuleImmutableId": {
+        "DCR1_ImmutableId": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName')), '2022-06-01').immutableId]"
+            "value": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName1')), '2022-06-01').immutableId]"
+        },
+        "DCR2_ImmutableId": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName2')), '2022-06-01').immutableId]"
+        },
+        "DCR3_ImmutableId": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Insights/dataCollectionRules', variables('DCRName3')), '2022-06-01').immutableId]"
         },
         "FunctionAppName": {
             "type": "string",

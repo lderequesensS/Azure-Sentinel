@@ -17,7 +17,7 @@ async def main(mytimer: func.TimerRequest) -> None:
 
     # Environment variables for Logs Ingestion API
     dce_endpoint = os.environ.get("DCE_ENDPOINT")
-    dcr_immutable_id = os.environ.get("DCR_IMMUTABLE_ID")
+    dcr_immutable_id = os.environ.get("DCR_IMMUTABLE_ID_3")
     # Each connector has its own stream/table
     stream_name = "Custom-ZeroFox_CTI_phone_numbers_CL"
 
