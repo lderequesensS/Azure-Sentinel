@@ -1,12 +1,12 @@
 [
     {
-        "name": "ZeroFox_CTI_discord_CL",
+        "name": "ZeroFoxDiscord_CL",
         "type": "Microsoft.OperationalInsights/workspaces/tables",
         "apiVersion": "2021-03-01-privatepreview",
         "location": "{{location}}",
         "properties": {
             "schema": {
-                "name": "ZeroFox_CTI_discord_CL",
+                "name": "ZeroFoxDiscord_CL",
                 "columns": [
                     {
                         "Name": "TimeGenerated",
