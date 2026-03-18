@@ -1,12 +1,12 @@
 [
     {
-        "name": "ZeroFoxNationalIds_CL",
+        "name": "ZeroFoxCreditCards_CL",
         "type": "Microsoft.OperationalInsights/workspaces/tables",
         "apiVersion": "2021-03-01-privatepreview",
         "location": "{{location}}",
         "properties": {
             "schema": {
-                "name": "ZeroFoxNationalIds_CL",
+                "name": "ZeroFoxCreditCards_CL",
                 "columns": [
                     {
                         "Name": "TimeGenerated",
@@ -14,44 +14,54 @@
                         "Description": "The timestamp reflecting the time in which the event was generated"
                     },
                     {
-                        "Name": "national_identifier_s",
+                        "Name": "cc_num_s",
                         "Type": "string",
-                        "Description": "National Citizen Identifier"
+                        "Description": "Cc Num"
                     },
                     {
-                        "Name": "country_s",
+                        "Name": "month_s",
                         "Type": "string",
-                        "Description": "Country"
+                        "Description": "Month"
                     },
                     {
-                        "Name": "first_name_s",
+                        "Name": "year_s",
                         "Type": "string",
-                        "Description": "First name"
+                        "Description": "Year"
                     },
                     {
-                        "Name": "last_name_s",
+                        "Name": "cvv_s",
                         "Type": "string",
-                        "Description": "Last name"
+                        "Description": "Cvv"
                     },
                     {
-                        "Name": "person_name_s",
+                        "Name": "issuer_s",
                         "Type": "string",
-                        "Description": "Person name"
-                    },
-                    {
-                        "Name": "created_at_t",
-                        "Type": "datetime",
-                        "Description": "When the national citizen identifier was ingested into the system"
+                        "Description": "Issuer"
                     },
                     {
                         "Name": "source_s",
                         "Type": "string",
-                        "Description": "Source url"
+                        "Description": "Source"
+                    },
+                    {
+                        "Name": "cc_bin_s",
+                        "Type": "string",
+                        "Description": "Cc Bin"
                     },
                     {
                         "Name": "breach_name_s",
                         "Type": "string",
                         "Description": "Breach Name"
+                    },
+                    {
+                        "Name": "created_at_t",
+                        "Type": "datetime",
+                        "Description": "When the credit card was ingested into the system"
+                    },
+                    {
+                        "Name": "id_s",
+                        "Type": "string",
+                        "Description": "Record id"
                     }
                 ]
             }

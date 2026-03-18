@@ -1,12 +1,12 @@
 [
     {
-        "name": "ZeroFoxBotnetCompromisedCredentials_CL",
+        "name": "ZeroFoxBotnet_CL",
         "type": "Microsoft.OperationalInsights/workspaces/tables",
         "apiVersion": "2021-03-01-privatepreview",
         "location": "{{location}}",
         "properties": {
             "schema": {
-                "name": "ZeroFoxBotnetCompromisedCredentials_CL",
+                "name": "ZeroFoxBotnet_CL",
                 "columns": [
                     {
                         "Name": "TimeGenerated",
@@ -14,49 +14,34 @@
                         "Description": "The timestamp reflecting the time in which the event was generated"
                     },
                     {
-                        "Name": "created_at_t",
+                        "Name": "ip_address_s",
+                        "Type": "string",
+                        "Description": "IP Address for the botnet record"
+                    },
+                    {
+                        "Name": "listed_at_t",
                         "Type": "datetime",
-                        "Description": "When the record was ingested into the system"
+                        "Description": "When the botnet was ingested into the system"
                     },
                     {
-                        "Name": "username_s",
+                        "Name": "bot_name_s",
                         "Type": "string",
-                        "Description": "Username"
+                        "Description": "Botnet Family of the botnet record"
                     },
                     {
-                        "Name": "password_s",
+                        "Name": "c2_ip_address_s",
                         "Type": "string",
-                        "Description": "Password"
+                        "Description": "Destination IP address of the botnet record"
                     },
                     {
-                        "Name": "email_s",
+                        "Name": "c2_domain_s",
                         "Type": "string",
-                        "Description": "Email"
+                        "Description": "Domain of the botnet record"
                     },
                     {
-                        "Name": "domain_s",
-                        "Type": "string",
-                        "Description": "Domain"
-                    },
-                    {
-                        "Name": "impacted_domain_s",
-                        "Type": "string",
-                        "Description": "Impacted Domain"
-                    },
-                    {
-                        "Name": "botnet_family_s",
-                        "Type": "string",
-                        "Description": "Botnet Family"
-                    },
-                    {
-                        "Name": "accessed_url_s",
-                        "Type": "string",
-                        "Description": "Accessed Url"
-                    },
-                    {
-                        "Name": "ip_s",
-                        "Type": "string",
-                        "Description": "Ip"
+                        "Name": "is_common_domain_b",
+                        "Type": "boolean",
+                        "Description": "Is the C2 Domain common (i.e. found in [Majestic Million's top 1M domains list](https://majestic.com/reports/majestic-million))"
                     },
                     {
                         "Name": "file_location_s",
@@ -129,34 +114,9 @@
                         "Description": "Breached At"
                     },
                     {
-                        "Name": "accessed_url_date_t",
-                        "Type": "datetime",
-                        "Description": "Accessed Url Date"
-                    },
-                    {
                         "Name": "tags_s",
                         "Type": "string",
                         "Description": "Tags"
-                    },
-                    {
-                        "Name": "breach_id_s",
-                        "Type": "string",
-                        "Description": "Breach ID the credentials were acquired from"
-                    },
-                    {
-                        "Name": "breach_name_s",
-                        "Type": "string",
-                        "Description": "Breach Name"
-                    },
-                    {
-                        "Name": "breach_url_s",
-                        "Type": "string",
-                        "Description": "Breach Url"
-                    },
-                    {
-                        "Name": "id_s",
-                        "Type": "string",
-                        "Description": "Record id"
                     }
                 ]
             }

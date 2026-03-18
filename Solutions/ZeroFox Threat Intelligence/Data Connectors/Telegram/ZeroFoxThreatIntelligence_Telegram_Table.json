@@ -1,12 +1,12 @@
 [
     {
-        "name": "ZeroFoxCreditCards_CL",
+        "name": "ZeroFoxTelegram_CL",
         "type": "Microsoft.OperationalInsights/workspaces/tables",
         "apiVersion": "2021-03-01-privatepreview",
         "location": "{{location}}",
         "properties": {
             "schema": {
-                "name": "ZeroFoxCreditCards_CL",
+                "name": "ZeroFoxTelegram_CL",
                 "columns": [
                     {
                         "Name": "TimeGenerated",
@@ -14,49 +14,39 @@
                         "Description": "The timestamp reflecting the time in which the event was generated"
                     },
                     {
-                        "Name": "cc_num_s",
+                        "Name": "channel_name_s",
                         "Type": "string",
-                        "Description": "Cc Num"
+                        "Description": "Channel Name"
                     },
                     {
-                        "Name": "month_s",
-                        "Type": "string",
-                        "Description": "Month"
-                    },
-                    {
-                        "Name": "year_s",
-                        "Type": "string",
-                        "Description": "Year"
-                    },
-                    {
-                        "Name": "cvv_s",
-                        "Type": "string",
-                        "Description": "Cvv"
-                    },
-                    {
-                        "Name": "issuer_s",
-                        "Type": "string",
-                        "Description": "Issuer"
-                    },
-                    {
-                        "Name": "source_s",
-                        "Type": "string",
-                        "Description": "Source"
-                    },
-                    {
-                        "Name": "cc_bin_s",
-                        "Type": "string",
-                        "Description": "Cc Bin"
-                    },
-                    {
-                        "Name": "breach_name_s",
-                        "Type": "string",
-                        "Description": "Breach Name"
-                    },
-                    {
-                        "Name": "created_at_t",
+                        "Name": "timestamp_t",
                         "Type": "datetime",
-                        "Description": "When the credit card was ingested into the system"
+                        "Description": "When the telegram message was sent"
+                    },
+                    {
+                        "Name": "first_name_s",
+                        "Type": "string",
+                        "Description": "First Name"
+                    },
+                    {
+                        "Name": "last_name_s",
+                        "Type": "string",
+                        "Description": "Last Name"
+                    },
+                    {
+                        "Name": "message_s",
+                        "Type": "string",
+                        "Description": "Message"
+                    },
+                    {
+                        "Name": "user_s",
+                        "Type": "string",
+                        "Description": "User"
+                    },
+                    {
+                        "Name": "message_url_s",
+                        "Type": "string",
+                        "Description": "Message Url"
                     },
                     {
                         "Name": "id_s",

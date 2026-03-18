@@ -1,12 +1,12 @@
 [
     {
-        "name": "ZeroFoxPhishingResearch_CL",
+        "name": "ZeroFoxDiscord_CL",
         "type": "Microsoft.OperationalInsights/workspaces/tables",
         "apiVersion": "2021-03-01-privatepreview",
         "location": "{{location}}",
         "properties": {
             "schema": {
-                "name": "ZeroFoxPhishingResearch_CL",
+                "name": "ZeroFoxDiscord_CL",
                 "columns": [
                     {
                         "Name": "TimeGenerated",
@@ -14,49 +14,44 @@
                         "Description": "The timestamp reflecting the time in which the event was generated"
                     },
                     {
-                        "Name": "scanned_t",
+                        "Name": "author_id_s",
+                        "Type": "string",
+                        "Description": "Author Id"
+                    },
+                    {
+                        "Name": "author_username_s",
+                        "Type": "string",
+                        "Description": "Author Username"
+                    },
+                    {
+                        "Name": "channel_name_s",
+                        "Type": "string",
+                        "Description": "Channel name"
+                    },
+                    {
+                        "Name": "content_s",
+                        "Type": "string",
+                        "Description": "Content"
+                    },
+                    {
+                        "Name": "server_name_s",
+                        "Type": "string",
+                        "Description": "Server name"
+                    },
+                    {
+                        "Name": "timestamp_t",
                         "Type": "datetime",
-                        "Description": "Scanned"
+                        "Description": "Timestamp when the message was sent"
                     },
                     {
-                        "Name": "domain_s",
+                        "Name": "thread_url_s",
                         "Type": "string",
-                        "Description": "Domain"
+                        "Description": "Thread URL"
                     },
                     {
-                        "Name": "url_s",
+                        "Name": "id_s",
                         "Type": "string",
-                        "Description": "Url"
-                    },
-                    {
-                        "Name": "cert_authority_s",
-                        "Type": "string",
-                        "Description": "Cert Authority"
-                    },
-                    {
-                        "Name": "cert_fingerprint_s",
-                        "Type": "string",
-                        "Description": "Cert Fingerprint"
-                    },
-                    {
-                        "Name": "cert_issued_t",
-                        "Type": "datetime",
-                        "Description": "Cert Issued"
-                    },
-                    {
-                        "Name": "host_ip_s",
-                        "Type": "string",
-                        "Description": "Host Ip"
-                    },
-                    {
-                        "Name": "host_asn_s",
-                        "Type": "int",
-                        "Description": "Host Asn"
-                    },
-                    {
-                        "Name": "host_geo_s",
-                        "Type": "string",
-                        "Description": "Host Geo"
+                        "Description": "Record id"
                     }
                 ]
             }
