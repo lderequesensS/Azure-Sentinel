@@ -33,8 +33,8 @@
         "queryWindowInMin": "{{queryWindowInMin}}",
         "httpMethod": "GET",
         "queryTimeFormat": "yyyy-MM-ddTHH:mm:ssZ",
-        "startTimeAttributeName": "created_after",
-        "endTimeAttributeName": "created_before",
+        "startTimeAttributeName": "listed_after",
+        "endTimeAttributeName": "listed_before",
         "retryCount": 3,
         "timeoutInSeconds": 60,
         "headers": {
