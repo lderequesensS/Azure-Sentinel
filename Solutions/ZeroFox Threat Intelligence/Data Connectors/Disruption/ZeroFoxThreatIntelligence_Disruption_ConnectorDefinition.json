@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxTelegramDefinition",
+  "name": "ZeroFoxDisruptionDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxTelegramDefinition",
-      "title": "ZeroFox Enterprise - Telegram",
+      "id": "ZeroFoxDisruptionDefinition",
+      "title": "ZeroFox Enterprise - Disruption",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects telegram data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_Telegram_CL",
+      "descriptionMarkdown": "Collects disruption data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxDisruption_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Telegram",
-          "baseQuery": "ZeroFoxThreatIntelligence_Telegram_CL"
+          "legend": "ZeroFox Disruption",
+          "baseQuery": "ZeroFoxDisruption_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_Telegram_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_Telegram_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxDisruption_CL",
+          "lastDataReceivedQuery": "ZeroFoxDisruption_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

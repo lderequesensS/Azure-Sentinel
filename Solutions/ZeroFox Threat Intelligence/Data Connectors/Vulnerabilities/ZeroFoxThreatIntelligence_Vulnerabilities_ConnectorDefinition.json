@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxBotnetDefinition",
+  "name": "ZeroFoxVulnerabilitiesDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxBotnetDefinition",
-      "title": "ZeroFox Enterprise - Botnet",
+      "id": "ZeroFoxVulnerabilitiesDefinition",
+      "title": "ZeroFox Enterprise - Vulnerabilities",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects botnet data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_Botnet_CL",
+      "descriptionMarkdown": "Collects vulnerabilities data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxVulnerabilities_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Botnet",
-          "baseQuery": "ZeroFoxThreatIntelligence_Botnet_CL"
+          "legend": "ZeroFox Vulnerabilities",
+          "baseQuery": "ZeroFoxVulnerabilities_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_Botnet_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_Botnet_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxVulnerabilities_CL",
+          "lastDataReceivedQuery": "ZeroFoxVulnerabilities_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

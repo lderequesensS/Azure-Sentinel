@@ -10,19 +10,19 @@
       "title": "ZeroFox Enterprise - Dark Web",
       "publisher": "ZeroFox Enterprise",
       "descriptionMarkdown": "Collects dark web data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_DarkWeb_CL",
+      "graphQueriesTableName": "ZeroFoxDarkWeb_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
           "legend": "ZeroFox Dark Web",
-          "baseQuery": "ZeroFoxThreatIntelligence_DarkWeb_CL"
+          "baseQuery": "ZeroFoxDarkWeb_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_DarkWeb_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_DarkWeb_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxDarkWeb_CL",
+          "lastDataReceivedQuery": "ZeroFoxDarkWeb_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

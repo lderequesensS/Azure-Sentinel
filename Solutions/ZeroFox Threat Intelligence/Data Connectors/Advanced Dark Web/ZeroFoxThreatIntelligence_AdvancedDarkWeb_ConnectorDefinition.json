@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxBotnetCompromisedCredentialsDefinition",
+  "name": "ZeroFoxAdvancedDarkWebDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxBotnetCompromisedCredentialsDefinition",
-      "title": "ZeroFox Enterprise - Botnet Compromised Credentials",
+      "id": "ZeroFoxAdvancedDarkWebDefinition",
+      "title": "ZeroFox Enterprise - Advanced Dark Web",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects botnet compromised credentials data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_BotnetCompromisedCredentials_CL",
+      "descriptionMarkdown": "Collects advanced dark web data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxAdvancedDarkWeb_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Botnet Compromised Credentials",
-          "baseQuery": "ZeroFoxThreatIntelligence_BotnetCompromisedCredentials_CL"
+          "legend": "ZeroFox Advanced Dark Web",
+          "baseQuery": "ZeroFoxAdvancedDarkWeb_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_BotnetCompromisedCredentials_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_BotnetCompromisedCredentials_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxAdvancedDarkWeb_CL",
+          "lastDataReceivedQuery": "ZeroFoxAdvancedDarkWeb_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

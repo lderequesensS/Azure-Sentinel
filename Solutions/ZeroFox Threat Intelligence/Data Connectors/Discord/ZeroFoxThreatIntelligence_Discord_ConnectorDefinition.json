@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxEmailAddressesDefinition",
+  "name": "ZeroFoxDiscordDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxEmailAddressesDefinition",
-      "title": "ZeroFox Enterprise - Email Addresses",
+      "id": "ZeroFoxDiscordDefinition",
+      "title": "ZeroFox Enterprise - Discord",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects email addresses data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_EmailAddresses_CL",
+      "descriptionMarkdown": "Collects discord data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxDiscord_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Email Addresses",
-          "baseQuery": "ZeroFoxThreatIntelligence_EmailAddresses_CL"
+          "legend": "ZeroFox Discord",
+          "baseQuery": "ZeroFoxDiscord_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_EmailAddresses_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_EmailAddresses_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxDiscord_CL",
+          "lastDataReceivedQuery": "ZeroFoxDiscord_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

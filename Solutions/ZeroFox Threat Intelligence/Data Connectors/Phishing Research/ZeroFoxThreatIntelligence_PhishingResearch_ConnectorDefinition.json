@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxDisruptionDefinition",
+  "name": "ZeroFoxPhishingResearchDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxDisruptionDefinition",
-      "title": "ZeroFox Enterprise - Disruption",
+      "id": "ZeroFoxPhishingResearchDefinition",
+      "title": "ZeroFox Enterprise - Phishing Research",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects disruption data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_Disruption_CL",
+      "descriptionMarkdown": "Collects phishing research data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxPhishingResearch_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Disruption",
-          "baseQuery": "ZeroFoxThreatIntelligence_Disruption_CL"
+          "legend": "ZeroFox Phishing Research",
+          "baseQuery": "ZeroFoxPhishingResearch_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_Disruption_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_Disruption_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxPhishingResearch_CL",
+          "lastDataReceivedQuery": "ZeroFoxPhishingResearch_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

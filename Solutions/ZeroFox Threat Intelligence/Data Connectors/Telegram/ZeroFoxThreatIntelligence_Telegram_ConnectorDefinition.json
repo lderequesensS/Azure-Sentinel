@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxAdvancedDarkWebDefinition",
+  "name": "ZeroFoxTelegramDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxAdvancedDarkWebDefinition",
-      "title": "ZeroFox Enterprise - Advanced Dark Web",
+      "id": "ZeroFoxTelegramDefinition",
+      "title": "ZeroFox Enterprise - Telegram",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects advanced dark web data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_AdvancedDarkWeb_CL",
+      "descriptionMarkdown": "Collects telegram data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxTelegram_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Advanced Dark Web",
-          "baseQuery": "ZeroFoxThreatIntelligence_AdvancedDarkWeb_CL"
+          "legend": "ZeroFox Telegram",
+          "baseQuery": "ZeroFoxTelegram_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_AdvancedDarkWeb_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_AdvancedDarkWeb_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxTelegram_CL",
+          "lastDataReceivedQuery": "ZeroFoxTelegram_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [

@@ -1,28 +1,28 @@
 {
-  "name": "ZeroFoxExploitsDefinition",
+  "name": "ZeroFoxKeyIncidentsDefinition",
   "apiVersion": "2022-09-01-preview",
   "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
   "location": "{{location}}",
   "kind": "Customizable",
   "properties": {
     "connectorUiConfig": {
-      "id": "ZeroFoxExploitsDefinition",
-      "title": "ZeroFox Enterprise - Exploits",
+      "id": "ZeroFoxKeyIncidentsDefinition",
+      "title": "ZeroFox Enterprise - Key Incidents",
       "publisher": "ZeroFox Enterprise",
-      "descriptionMarkdown": "Collects exploits data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
-      "graphQueriesTableName": "ZeroFoxThreatIntelligence_Exploits_CL",
+      "descriptionMarkdown": "Collects key incidents data from the [ZeroFox](https://www.zerofox.com/threat-intelligence/) API into Microsoft Sentinel.",
+      "graphQueriesTableName": "ZeroFoxKeyIncidents_CL",
       "graphQueries": [
         {
           "metricName": "Total alerts received",
-          "legend": "ZeroFox Exploits",
-          "baseQuery": "ZeroFoxThreatIntelligence_Exploits_CL"
+          "legend": "ZeroFox Key Incidents",
+          "baseQuery": "ZeroFoxKeyIncidents_CL"
         }
       ],
       "sampleQueries": [],
       "dataTypes": [
         {
-          "name": "ZeroFoxThreatIntelligence_Exploits_CL",
-          "lastDataReceivedQuery": "ZeroFoxThreatIntelligence_Exploits_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+          "name": "ZeroFoxKeyIncidents_CL",
+          "lastDataReceivedQuery": "ZeroFoxKeyIncidents_CL\n | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
         }
       ],
       "connectivityCriteria": [
