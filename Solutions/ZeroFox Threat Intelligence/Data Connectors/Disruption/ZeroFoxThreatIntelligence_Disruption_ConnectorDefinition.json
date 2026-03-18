@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxDisruption_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Disruption entries",
+          "query": "ZeroFoxDisruption_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxDisruption_CL",

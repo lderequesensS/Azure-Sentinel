@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxEmailAddresses_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Email Addresses entries",
+          "query": "ZeroFoxEmailAddresses_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxEmailAddresses_CL",

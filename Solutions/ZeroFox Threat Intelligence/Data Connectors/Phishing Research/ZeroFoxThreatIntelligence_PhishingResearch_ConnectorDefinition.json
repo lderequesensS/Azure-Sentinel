@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxPhishingResearch_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Phishing Research entries",
+          "query": "ZeroFoxPhishingResearch_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxPhishingResearch_CL",

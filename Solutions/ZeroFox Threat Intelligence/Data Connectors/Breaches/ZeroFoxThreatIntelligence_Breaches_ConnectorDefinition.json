@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxBreaches_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Breaches entries",
+          "query": "ZeroFoxBreaches_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxBreaches_CL",

@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxCreditCards_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Credit Cards entries",
+          "query": "ZeroFoxCreditCards_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxCreditCards_CL",

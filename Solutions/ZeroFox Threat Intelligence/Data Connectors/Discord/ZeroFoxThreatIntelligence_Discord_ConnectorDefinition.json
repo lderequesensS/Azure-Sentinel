@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxDiscord_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Discord entries",
+          "query": "ZeroFoxDiscord_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxDiscord_CL",

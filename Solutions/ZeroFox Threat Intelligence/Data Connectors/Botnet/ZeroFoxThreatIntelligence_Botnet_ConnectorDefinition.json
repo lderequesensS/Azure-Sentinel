@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxBotnet_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Botnet entries",
+          "query": "ZeroFoxBotnet_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxBotnet_CL",

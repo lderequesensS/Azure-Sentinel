@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxIndicators_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Indicators entries",
+          "query": "ZeroFoxIndicators_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxIndicators_CL",

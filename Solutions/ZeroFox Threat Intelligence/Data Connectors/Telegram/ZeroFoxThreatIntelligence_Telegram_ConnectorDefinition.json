@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxTelegram_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Telegram entries",
+          "query": "ZeroFoxTelegram_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxTelegram_CL",

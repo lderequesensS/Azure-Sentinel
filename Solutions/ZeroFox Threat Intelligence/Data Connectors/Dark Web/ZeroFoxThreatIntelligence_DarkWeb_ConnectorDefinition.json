@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxDarkWeb_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Dark Web entries",
+          "query": "ZeroFoxDarkWeb_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxDarkWeb_CL",

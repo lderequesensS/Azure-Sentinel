@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxVulnerabilities_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Vulnerabilities entries",
+          "query": "ZeroFoxVulnerabilities_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxVulnerabilities_CL",

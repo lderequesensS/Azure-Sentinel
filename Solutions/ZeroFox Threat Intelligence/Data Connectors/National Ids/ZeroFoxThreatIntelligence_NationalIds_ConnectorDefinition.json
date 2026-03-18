@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxNationalIds_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox National IDs entries",
+          "query": "ZeroFoxNationalIds_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxNationalIds_CL",

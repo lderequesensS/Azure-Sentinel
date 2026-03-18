@@ -18,7 +18,12 @@
           "baseQuery": "ZeroFoxKeyIncidents_CL"
         }
       ],
-      "sampleQueries": [],
+      "sampleQueries": [
+        {
+          "description": "List all ZeroFox Key Incidents entries",
+          "query": "ZeroFoxKeyIncidents_CL\n| sort by TimeGenerated asc"
+        }
+      ],
       "dataTypes": [
         {
           "name": "ZeroFoxKeyIncidents_CL",
