@@ -107,11 +107,6 @@
                         "Name": "industry_s",
                         "Type": "string",
                         "Description": "Industry"
-                    },
-                    {
-                        "Name": "_elastic_sort_s",
-                        "Type": "string",
-                        "Description": "value to handled pagination on UQS"
                     }
                 ]
             }

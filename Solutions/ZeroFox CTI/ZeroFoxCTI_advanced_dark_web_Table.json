@@ -117,11 +117,6 @@
                         "Name": "id_s",
                         "Type": "int",
                         "Description": "Record id"
-                    },
-                    {
-                        "Name": "_elastic_sort_s",
-                        "Type": "string",
-                        "Description": "value to handled pagination on UQS"
                     }
                 ]
             }
