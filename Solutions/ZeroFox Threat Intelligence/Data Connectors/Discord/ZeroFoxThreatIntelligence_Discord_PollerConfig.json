@@ -33,8 +33,8 @@
         "queryWindowInMin": "[[first(parameters('pollingFrequency'))]",
         "httpMethod": "GET",
         "queryTimeFormat": "yyyy-MM-ddTHH:mm:ssZ",
-        "startTimeAttributeName": "created_after",
-        "endTimeAttributeName": "created_before",
+        "startTimeAttributeName": "timestamp_after",
+        "endTimeAttributeName": "timestamp_before",
         "retryCount": 3,
         "timeoutInSeconds": 60,
         "headers": {
