@@ -20,7 +20,7 @@
         "apiKey": "{{apikey}}"
       },
       "request": {
-        "apiEndpoint": "https://int.zerofox.com/microsoft-sentinel/alerts/",
+        "apiEndpoint": "https://int.zerofox.com/microsoft-sentinel/alerts",
         "rateLimitQPS": 10,
         "queryWindowInMin": "[[first(parameters('pollingFrequency'))]",
         "httpMethod": "Get",
